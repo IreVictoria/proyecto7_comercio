@@ -80,10 +80,17 @@ exports.verifyToken = async (req, res) => {
 }; 
 
 //D. OBTENER A TODOS LO USUARIOS. // MODIFICAR PARA RECIRBIR DATOS POR ID DEL USUARIO. 
-exports.getAllUsers = async (req, res) => {
+exports.getUserById = async (req, res) => {
     try {
-        const users = await User.find().select('-password');
-        res.json({ users });
+        const { id } = req.params; // EXTRAER EL ID DESDE LOS PARAMETROS DE LA RUTA.
+        const user = await User.findById(id).select('-password'); // BUSCA AL USUARIO POR ID Y EXCLUYE EL PASSWORD.
+        if (!user) {
+            return res.status(404).json({
+                message: `Lo sentimos, usuario no encontrado`
+            });
+        }
+        res.json({user}) ; //DEVUELVE EL USUARIO ENCONTRADO.
+        
     } catch (error) {
         res.status(500).json({
             msg: "Error al obtener los usuarios",
