@@ -2,6 +2,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Route, Redirect} from "react-router-dom"; 
 import UserContext from "../../context/user/userContext";
+import PropTypes from "prop-types";
 
 
 function PrivateRoute ({ component: Component, ...props}) {
@@ -16,7 +17,7 @@ function PrivateRoute ({ component: Component, ...props}) {
             setLoading(false);
         };
         fetchToken();
-    }, [authStatus]); 
+    }, [authStatus, verifyToken]); 
 
     if (loading) return null; 
 
@@ -34,4 +35,8 @@ function PrivateRoute ({ component: Component, ...props}) {
     ); 
 
 }
+
+PrivateRoute.propTypes = {
+    component: PropTypes.elementType.isRequired,
+};
 export default PrivateRoute; 

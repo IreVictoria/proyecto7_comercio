@@ -1,13 +1,46 @@
 // IMPORTAR.
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Route, Redirect } from "react-router-dom";
 import UserContext from "../../context/user/userContext";
+import PropTypes from "prop-types";
 
-function AuthRoute ({ component: Component, ...props }) {
+function AuthRoute({ component: Component, ...props }) {
 
     const userCtx = useContext(UserContext)
     const { authStatus, verifyToken } = userCtx
 
-    const [loading, setLoading]
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const fetchToken = async () => {
+            await verifyToken()
+            setLoading(false)
+        }; 
+        fetchToken(); 
+
+    }, [authStatus, verifyToken])
+
+    return (
+        <Route {...props} render={props => {
+            if (loading) return null
+            return authStatus ?
+                (<Redirect to="/iniciar-sesion" />)
+                :
+                (<Component {...props} />)
+
+        }
+
+        } />
+
+    ); 
 
 }
+
+AuthRoute.propTypes = {
+    component: PropTypes.elementType.isRequired,
+};
+export default AuthRoute; 
+
+
+
+
