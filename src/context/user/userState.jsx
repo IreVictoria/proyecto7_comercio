@@ -1,27 +1,27 @@
 //IMPORTAR.
 import React, { useReducer } from "react";
-import UserContext from "./userContext";
-import UserReducer from "./userReducer"; 
-import PropTypes from "prop-types";
+import UserContext from "./userContext"; // HOOK QUE GESTIONA EL ESTADO DEL COMPONENTE MEDIANTE UN REDUCER.
+import UserReducer from "./userReducer"; // FUNCION QUE SE ENCARGA DE CAMBIAR EL ESTADO BASADO EN ACCIONES ESPECIFICAS
+import PropTypes from "prop-types"; // IMPORTA PROPTYPES PARA VALIDAR LOS PROPS
 
-import axiosClient from "../../config/axios";
+import axiosClient from "../../config/axios"; // IMPORTA UNA INSTANCIA CONFIGURADA DE AXIOS PARA HACER PETICIONES HTTP AL BACKEND.
 
-const UserState = (props) => {
+const UserState = (props) => { 
     const initialState = {
         user:{
-            name: null,
+            name: null, // ESTADO INICIAL NULO 
             email:null,
         },
-        authStatus: false, // confirma si el usuario esta autenticado o no. 
-        loading:true
+        authStatus: false, // BOLEANO que confirma si el usuario esta autenticado o no. 
+        loading:true // ESTADO PARA SABER SI LA APLICACIÓN ESTA CARGANDO.
     }
-    const [ globalState, dispatch ] = useReducer(UserReducer, initialState)
+    const [ globalState, dispatch ] = useReducer(UserReducer, initialState) // UserReducer FUNCIÓN QUE MANEJARA COMO CAMBIA EL ESTADO. 
     const registerUser = async (dataForm) => {
         try{
-            const res = await axiosClient.post(`/api/users/register`, dataForm)
+            const res = await axiosClient.post(`/api/users/register`, dataForm) // REALIZA UNA PETICION POST PARA REGISTRAR AL USUARIO.
             dispatch({
-                type: "REGISTRO_EXITOSO",
-                payload: res.data
+                type: "REGISTRO_EXITOSO", // ACCION ENVIADA AL REDUCER PARA CAMBIAR EL ESTADO.
+                payload: res.data 
             })
         }catch (error){
             console.log(error)
@@ -29,16 +29,16 @@ const UserState = (props) => {
     }
 
     const verifyToken = async () => {
-        const token = localStorage.getItem(`token`)
+        const token = localStorage.getItem(`token`) // OBTIENE EL TOKEN ALMACENADO EN EL LOCALSTORAGE
         if(token){
-            axiosClient.defaults.headers.common[`x-auth-token`] = token
+            axiosClient.defaults.headers.common[`x-auth-token`] = token // ESTABLECE EL TOKEN EN LOS ENCABEZADOS DE AXIOS
         } else {
-            delete axiosClient.defaults.headers.common[`x-auth-token`]
+            delete axiosClient.defaults.headers.common[`x-auth-token`] // ELIMINA EL TOKEN DE LOS ENCABEZADOS SI NO EXISTE
         }
         try{
-            const respuesta = await axiosClient.get(`/api/users/verify-token`)
+            const respuesta = await axiosClient.get(`/api/users/verify-token`) // VERIFICA SI EL TOKEN ES VALIDO
             dispatch({
-                type: "OBTERNER_USUARIO",
+                type: "OBTERNER_USUARIO", // ACCION PARA ACTUALIZAR EL ESTADO CON LOS DATOS DEL USUARIO 
                 payload: respuesta.data.users
             })
         }catch (error){
