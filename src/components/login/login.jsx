@@ -1,10 +1,11 @@
 // IMPORTAR HOOKS.
 import React, { useState, useEffect, useContext } from "react";
 import UserContext from "../../context/user/userContext";
-import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
-function Login(props) {
+function Login() {
   const userCtx = useContext(UserContext)
+  const navigate = useNavigate(); 
 
   const {
     loginUser,
@@ -20,9 +21,9 @@ function Login(props) {
   useEffect(() => {
     verifytoken()
     if (authStatus) {
-      props.history.push("/perfil")
+     navigate("/perfil")
     }
-  }, [authStatus, verifytoken, props.history]);
+  }, [authStatus, verifytoken, navigate]);
 
   if (authStatus) return null
 
@@ -100,7 +101,5 @@ function Login(props) {
   );
 }
 
-Login.propTypes = {
-  history: PropTypes.object.isRequired
-};
+
 export default Login; 

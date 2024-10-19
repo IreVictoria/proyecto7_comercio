@@ -2,22 +2,23 @@
 import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../../context/user/userContext";
 import axiosClient from "../../config/axios";
-import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
-function Profile(props) {
+function Profile() {
   const userCtx = useContext(UserContext);
   const { authStatus, verifytoken, user } = userCtx;
+  const navigate = useNavigate(); 
 
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     verifytoken();
     if (!authStatus) {
-      props.history.push("/login"); // Redirige al login si no está autenticado.
+      navigate("/login"); // Redirige al login si no está autenticado.
     } else {
       fetchUserProducts(); // Cargar los productos si está autenticado.
     }
-  }, [authStatus, verifytoken, props.history]);
+  }, [authStatus, verifytoken, navigate]);
 
   const fetchUserProducts = async () => {
     try {
@@ -66,7 +67,7 @@ function Profile(props) {
         <div className="mt-6">
           <button
             className="w-full bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded-md transition duration-300"
-            onClick={() => props.history.push("/login")}
+            onClick={() => navigate("/login")}
           >
             Cerrar Sesión
           </button>
@@ -76,8 +77,5 @@ function Profile(props) {
   );
 }
 
-Profile.propTypes = {
-  history: PropTypes.object.isRequired,
-};
 
 export default Profile;

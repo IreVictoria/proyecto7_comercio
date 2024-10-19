@@ -2,11 +2,10 @@
 import React, { useReducer } from "react";
 import UserContext from "./userContext"; // HOOK QUE GESTIONA EL ESTADO DEL COMPONENTE MEDIANTE UN REDUCER.
 import UserReducer from "./userReducer"; // FUNCION QUE SE ENCARGA DE CAMBIAR EL ESTADO BASADO EN ACCIONES ESPECIFICAS
-import PropTypes from "prop-types"; // IMPORTA PROPTYPES PARA VALIDAR LOS PROPS
 
 import axiosClient from "../../config/axios"; // IMPORTA UNA INSTANCIA CONFIGURADA DE AXIOS PARA HACER PETICIONES HTTP AL BACKEND.
 
-const UserState = (props) => { 
+const UserState = (children) => { 
     const initialState = {
         user:{
             name: null, // ESTADO INICIAL NULO 
@@ -76,14 +75,12 @@ const UserState = (props) => {
             loginUser,
             logout
         }}> 
-            {props.children}
+            {children}
 
         </UserContext.Provider>
     )
 }
 
-UserState.propTypes = {
-    children: PropTypes.node.isRequired,
-}; 
+
 
 export default UserState; 
