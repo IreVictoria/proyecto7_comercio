@@ -24,7 +24,7 @@ function AuthRoute({ component: Component, ...props }) {
         <Route {...props} render={props => {
             if (loading) return null
             return authStatus ?
-                (<Redirect to="/iniciar-sesion" />)
+                (<Redirect to="/" />)
                 :
                 (<Component {...props} />)
 
@@ -39,6 +39,7 @@ function AuthRoute({ component: Component, ...props }) {
 AuthRoute.propTypes = {
     component: PropTypes.elementType.isRequired,
 };
+
 export default AuthRoute; 
 
 

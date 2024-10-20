@@ -2,15 +2,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import UserContext from "../../context/user/userContext";
 import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 function Login() {
   const userCtx = useContext(UserContext)
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const {
     loginUser,
     authStatus,
-    verifytoken,
+    verifyToken,
   } = userCtx
 
   const [data, setData] = useState({
@@ -19,11 +19,11 @@ function Login() {
   })
 
   useEffect(() => {
-    verifytoken()
+    verifyToken()
     if (authStatus) {
-     navigate("/perfil")
+      navigate("/perfil")
     }
-  }, [authStatus, verifytoken, navigate]);
+  }, [authStatus, verifyToken, navigate]);
 
   if (authStatus) return null
 
@@ -40,62 +40,76 @@ function Login() {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-          <h2 className="text-2xl font-bold text-cyan-600 text-center mb-6">
+      <div className="bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
+          <img className="mx-auto h-12 w-auto" src={Logo} alt="Workflow" />
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Iniciar sesión
           </h2>
-          <form onSubmit={sendData} className="space-y-4">
-            <div>
-              <label
-                htmlFor="email-address"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Tu correo
-              </label>
-              <input
-                id="email-address"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                placeholder="Tu correo"
-                onChange={handleChange}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500"
-              />
-            </div>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            ¿Aún sin cuenta? &nbsp;
+            <Link
+              to="/register"
+              className="font-medium text-cyan-500 hover:text-cyan-700"
+            >
+              Regístrate aquí.
+            </Link>
+          </p>
+        </div>
 
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                placeholder="Password"
-                onChange={handleChange}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500"
-              />
-            </div>
+        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+          <div className="bg-white py-8 px-4 shadow-lg rounded-lg sm:px-10">
+            <form className="space-y-6" onSubmit={(e) => sendData(e)}>
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Tu correo electrónico
+                </label>
+                <div className="mt-1">
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    onChange={(e) => handleChange(e)}
+                    required
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm"
+                  />
+                </div>
+              </div>
 
-            <div>
-              <button
-                type="submit"
-                className="w-full bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded-md transition duration-300"
-              >
-                Comenzar
-              </button>
-            </div>
-          </form>
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Tu contraseña
+                </label>
+                <div className="mt-1">
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    onChange={(e) => handleChange(e)}
+                    required
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <button
+                  type="submit"
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-500 hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition duration-300"
+                >
+                  Acceder a tu cuenta
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-
     </>
 
   );

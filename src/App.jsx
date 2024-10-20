@@ -1,30 +1,35 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/home/inicio';
-import Header from './components/layout/header';
 import Profile from './components/profile/profile';
 import Register from './components/register/register';
 import Login from './components/login/login';
 import './App.css'
+import UserState from './context/user/userState';
 
 function App() {
   return (
-    
-    <BrowserRouter>
-      <Routes>
+    <UserState>
+      <Router>
+        <Routes>
+          {/* RUTAS PRIVADAS */}
+          <Route path='/profile' element={< Profile />} />
+          {/*RUTAS AUTENTICACIÓN*/}
+          <Route path='/register' element={<Register />} />
+          <Route path='/login' element={<Login />} />
 
-        {/* RUTAS PRIVADAS */}
-        <Route path='/perfil' element={< Profile />} />
-        
-        
+          {/* RUTAS PUBLICAS*/}
+          <Route path='/' element={< Home />} />
+        </Routes>
 
-        {/*RUTAS AUTENTICACIÓN*/}
-        <Route path='registro' element={<Register />} />
-        <Route path='iniciar-sesion' element={<Login />} />
+      </Router>
+    </UserState>
 
-        {/* RUTAS PUBLICAS*/}
-        <Route path='/' element={< Home />} />
-      </Routes>
-    </BrowserRouter>
   );
 }
 export default App
+
+
+
+
+
+

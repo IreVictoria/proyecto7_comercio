@@ -1,29 +1,38 @@
 // IMPORTAR HOOKS. 
 import React, { useState, useContext } from "react";
-import UserContext from "../../context/user/userContext";
+import UserContext from "../../context/user/userContext"; 
 
 function Register() {
-  const userCtx = useContext(UserContext)
+  const userCtx = useContext(UserContext) // ACCEDE AL CONTEXTO 
+
+  
   const {
     registerUser
-  } = userCtx
+  } = userCtx; 
   const [data, setData] = useState({
     name: "", // LAS " " ES UNA CADENA VACÍA, NO HAY CONTENIDO INICIAL EN ESOS CAMPOS. 
     email: "",
     password: "",
-  })
-
+  }); 
+  
   const handleChange = (event) => {
     event.preventDefault()
     setData({
       ...data,
       [event.target.name]: event.target.value
     })
-  }
+  }; 
+  
   const sendData = (event) => {
     event.preventDefault()
-    registerUser(data)
+    registerUser(data); //LLAMA A LA FUNCIÓN DEL CONTEXTO
   }
+ 
+  //RENDER CONDICIONAL: DESPUES DE LLAMAR A LOS HOOKS.
+  if (!userCtx) {
+    return <div> Cargando... </div>
+  }
+
   return (
     <>
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">

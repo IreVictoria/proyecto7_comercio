@@ -28,7 +28,7 @@ const reducers = (globalState, action) => {
                 ...globalState,
                 user: null,
                 authStatus: null,
-                loading: false
+                msg: action.payload,
             }
 
         default:

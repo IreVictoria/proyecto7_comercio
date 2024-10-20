@@ -1,5 +1,6 @@
 // CONFIGURACIÓN DE PAYPAL. 
 const client = require(`../config/paypal`); 
+const paypal =require(`../config/paypal`); 
 
 //A. FUNCIÓN PARA CREAR UNA TRANSACCIÓN DE PAGO QUE EL USUARIO NECESITO APROBAR EN LA PAGINA DE PAYPAL.
 

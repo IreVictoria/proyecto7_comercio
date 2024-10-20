@@ -6,19 +6,20 @@ import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const userCtx = useContext(UserContext);
-  const { authStatus, verifytoken, user } = userCtx;
+
+  const { authStatus, verifyToken, user } = userCtx;
   const navigate = useNavigate(); 
 
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    verifytoken();
+    verifyToken();
     if (!authStatus) {
-      navigate("/login"); // Redirige al login si no está autenticado.
+      navigate("/"); // Redirige al login si no está autenticado.
     } else {
       fetchUserProducts(); // Cargar los productos si está autenticado.
     }
-  }, [authStatus, verifytoken, navigate]);
+  }, [authStatus, verifyToken, navigate]);
 
   const fetchUserProducts = async () => {
     try {
