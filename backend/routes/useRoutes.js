@@ -11,7 +11,7 @@ authRouter.post(`/register`, registerUser);
 authRouter.post(`/login`, loginUser);
 authRouter.get(`/verify-token`, auth, verifyToken);
 authRouter.get(`/:id`, getUserById); 
-authRouter.get(`/:id`, updateUser); 
+authRouter.get(`/update/:id`, updateUser); 
 
 module.exports = authRouter; 
 

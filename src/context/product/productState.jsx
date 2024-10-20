@@ -22,23 +22,23 @@ const ProductState = (props) => {
     const [globalState, dispatch] = useReducer(ProductReducer, initialState);
     const getProduct = async (id) => {
         const res = await axiosClient.get(`/api/products/getone/${id}`)
-        const product = res.data.product
+        const product = res.data.product;
 
         dispatch({
             type: "GET_PRODUCT",
             payload: product
         })
-        return product
+        return product;
     }
 
     const getProducts = async () => {
-        const res = await axiosClient.get("/api/products/getall")
+        const res = await axiosClient.get("/api/products/getall");
 
         dispatch({
             type: "GET_PRODUCTS",
             payload: res.data.products
-        })
-    }
+        });
+    };
 
     return (
         <ProductContext.Provider

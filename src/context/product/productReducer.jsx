@@ -15,7 +15,7 @@ const reducer = (globalState, action) => {
                     stock: "",
                 }]
             }
-        case "GET PRODUCT":
+        case "GET_PRODUCT":
             return {
                 ...globalState,
                 product: [action.payload]

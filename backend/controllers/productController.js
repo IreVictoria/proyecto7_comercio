@@ -4,8 +4,8 @@ const Product = require (`../models/productModel.js`);
 //A. FUNCIÓN PARA CREAR UN PRODUCTO
 exports.createProduct = async (req, res) => {
     try {
-        const { name, price, decription, image, stock } = req.body;
-        const nuevoProducto = await Product.create({ name, price, decription, image, stock });
+        const { name, price, description, image, stock } = req.body;
+        const nuevoProducto = await Product.create({ name, price, description, image, stock });
         res.json(nuevoProducto);
         console.log(nuevoProducto);
     } catch (error) {

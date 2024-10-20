@@ -10,6 +10,10 @@ exports.addCart = async (req, res) => {
         if(!product) {
             return res.status(404).json({ message: `Producto no encontrado`});   
         }
+        if (product.stock < quantity) {
+            return res.status(400).json({ message: "Stock insuficiente"});
+        }
+        
         let cart = await Cart.findOne({ user: req.user.id});
         if(cart){
             //el carrito ya existe, verificar si el producto ya esta en el carrito.
@@ -43,7 +47,7 @@ exports.addCart = async (req, res) => {
 exports.removeFromCart = async (req, res) => {
     const {itemId} = req.body;
     try{
-        const cart = await Cart.findOne({user: req.user.id}); //buscar el carrito del usuario.
+        const cart = await Cart.findOne({user: req.user.id}).populate("items.product"); //buscar el carrito del usuario.
         if(!cart) {
             return res.status(404).json({ message: `Carrito no encontrado`});
         }
