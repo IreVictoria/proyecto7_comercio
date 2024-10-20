@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import UserContext from "../../context/user/userContext";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Logo from "../../assets/logo.png"
 function Login() {
   const userCtx = useContext(UserContext)
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ function Login() {
     <>
       <div className="bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <img className="mx-auto h-12 w-auto" src={Logo} alt="Workflow" />
+          <img className="mx-auto h-12 w-auto" src={Logo} alt="glases" />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Iniciar sesión
           </h2>

@@ -15,7 +15,7 @@ function Profile() {
   useEffect(() => {
     verifyToken();
     if (!authStatus) {
-      navigate("/"); // Redirige al login si no está autenticado.
+      navigate("/profile"); // Redirige al login si no está autenticado.
     } else {
       fetchUserProducts(); // Cargar los productos si está autenticado.
     }
