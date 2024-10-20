@@ -1,9 +1,9 @@
 
-function Header (){
+function Navbar (){
   return (
     <div>
       Barra de navegacion.
     </div>
   );
 }
-export default Header; 
+export default Navbar; 
