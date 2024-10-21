@@ -1,15 +1,20 @@
 //IMPORTAR LIBRERIAS Y CONTEXTO. 
-import React, { useContext, useEffect} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CartContext from "../../context/cart/cartContext";
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { useNavigate } from "react-router-dom";
+import axiosClient from "../../config/axios";
 
 //COMPONENTE PRINCIPAL DE CARRITO.
-function Cart () {
+function Cart() {
     const { cart, total, getCart, addToCart, removeFromCart, clearCart } = useContext(CartContext);
+    const [success, setSuccess] = useState(false); // CONTROLA EL ESTADO DE PAGO.
+    const navigate = useNavigate(); // NAVEGACIÓN DESPUES DEL PAGO. 
 
     // CARGAR EL CARRITO AL MONTAR EL COMPONENTE.
-    useEffect (() => {
+    useEffect(() => {
         getCart(); // LLAMA AL BACKEND PARA OBTENER EL CARRITO
-    },[getCart]); 
+    }, [getCart]);
 
     //FUNCIÓN PARA ELMINAR UN PRODUCTO DEL CARRITO.
     const handleRemove = (itemId) => {
@@ -19,7 +24,37 @@ function Cart () {
     //FUNCIÓN PARA AGREGAR MAS CANTIDAD DE UN PRODUCTO.
     const handleAdd = (productId) => {
         addToCart(productId, 1); // INCREMENTA LA CANTIDAD DEL PRODUCTO.
-    }; 
+    };
+    //CREAR LA ORDEN PARA PAYPAL.
+    const createOrder = async (data, actions) => {
+        return actions.order.create({
+            purshase_units: [
+                {
+                    amount: {
+                        value: total, // TOTAL DEL CARRITO EN USD.
+                    },
+                },
+            ],
+        });
+    };
+    //CAPTURAR LA ORDEN APROBADA.
+    const onApprove = async (data, actions) => {
+        const order = await actions.order.capture();
+        try {
+            //ENVIAR LA ORDEN AL BACKEND PARA PROCESARLA.
+            await axiosClient.post("/api/payments/execute-payment", {
+                orderID: order.id,
+            });
+            setSuccess(true); // MARCAR EL PAGO COMO EXITOSO.
+            clearCart(); // VACIAR CARRITO DESPUES DEL PAGO.
+            navigate("/profile"); // REDIRIGIR AL PERFIL DEL USUARIO.
+        } catch (error) {
+            console.error("Error al ejecutar el pago", error);
+        }
+    };
+    const onError = (error) => {
+        console.error("Error en el pago:", error);
+    };
 
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -58,7 +93,7 @@ function Cart () {
                                         onClick={() => handleAdd(item.product._id)}
                                         className="bg-cyan-500 hover:bg-cyan-600 text-white px-2 py-1 rounded-md transition"
                                     >
-                                        + 
+                                        +
                                     </button>
                                     <button
                                         onClick={() => handleRemove(item._id)}
@@ -73,22 +108,50 @@ function Cart () {
                 )}
 
                 <div className="mt-6 text-center">
-                    <p className="text-lg font-medium text-gray-700">Total: ${total}</p>
+                    <p className="text-lg font-medium text-gray-700">
+                        Total: ${total}
+                    </p>
 
                     <div className="mt-6 flex justify-between">
                         <button
                             className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md transition"
-                            onClick={clearCart}  // Limpia el carrito.
+                            onClick={clearCart}
                         >
                             Vaciar Carrito
                         </button>
-                        <button
-                            className="bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded-md transition"
-                            onClick={() => alert("Compra realizada con éxito")}  // Simula la compra.
+
+                        <PayPalScriptProvider
+                            options={{
+                                "client-id": `${import.meta.env.VITE_PAYPAL_CLIENT_ID}`,
+                                currency: "USD",
+                            }}
                         >
-                            Finalizar Compra
-                        </button>
+                            <PayPalButtons
+                                style={{ layout: "horizontal" }}
+                                createOrder={(data, actions) => {
+                                    return actions.order.create({
+                                        purchase_units: [
+                                            {
+                                                amount: { value: total },
+                                            },
+                                        ],
+                                    });
+                                }}
+                                onApprove={(data, actions) => {
+                                    return actions.order.capture().then((details) => {
+                                        alert(`Pago realizado por ${details.payer.name.given_name}`);
+                                    });
+                                }}
+                                onError={(error) => console.error("Error en el pago:", error)}
+                            />
+                        </PayPalScriptProvider>
                     </div>
+
+                    {success && (
+                        <p className="mt-4 text-green-600">
+                            ¡Pago realizado con éxito!
+                        </p>
+                    )}
                 </div>
             </div>
         </div>
