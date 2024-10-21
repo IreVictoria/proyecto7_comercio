@@ -81,6 +81,23 @@ exports.getCart = async (req, res) => {
     }
 }; 
 
+//C. FUNCIÓN PARA LIMPIAR EL CARRITO DE COMPRAS.
+exports.clearCart = async (req, res) => {
+    try {
+        const cart = await Cart.findOne({ user: req.user.id });
+        if(!cart) {
+            return res.status(404).json({ message: "Carrito no encontrado" });
+        }
+        cart.items = []; // LIMPIAR LOS PRODUCTOS DEL CARRITO.
+        cart.total = 0; //REINICIAR EL TOTAL A 0.
+        await cart.save(); //GUARDAR LOS CAMBIOS EN LA BASE DE DATOS.
+        res.status(200).json({ message: "Carrito limpiado con éxito" });
+    }catch (error) {
+        console.error(error);
+        res.status(500).json({ message: " Error al limpiar el carrito" }); 
+    }
+}; 
+
 //populate es una función de mongoose que se utiliza para reemplazar IDs referenciados en un documento con los detalles completos del objeto relacionado.
 //mongoose busca el documento completo del producto correspodiente a ese id en la colección de productos.
 //en lugar de solo devolver los IDs de los productos, devuelve todos los campos del producto como el nombre, precio etc. 

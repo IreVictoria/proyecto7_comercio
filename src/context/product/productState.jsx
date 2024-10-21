@@ -26,7 +26,7 @@ const ProductState = (props) => {
 
         dispatch({
             type: "GET_PRODUCT",
-            payload: product
+            payload: res.data.product
         })
         return product;
     }
