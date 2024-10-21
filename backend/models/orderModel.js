@@ -1,6 +1,6 @@
 // IMPORTAR LIBRERÍAS. 
 const mongoose = require(`mongoose`);
-const ventaSchema = new mongoose.Schema(
+const orderSchema = new mongoose.Schema(
     {
         usuario: {
             type: mongoose.Schema.Types.ObjectId,
@@ -26,5 +26,5 @@ const ventaSchema = new mongoose.Schema(
     }
 );
     
-const Venta = mongoose.model(`Venta`, ventaSchema);
-module.exports= Venta; 
+const Order = mongoose.model(`Order`, orderSchema);
+module.exports= Order

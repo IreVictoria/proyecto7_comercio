@@ -5,7 +5,7 @@ const dotenv =require(`dotenv`);
 const connectDB =require(`./config/db`);
 const authRouter = require("./routes/useRoutes");
 const productRouter = require("./routes/productRoutes");
-const ventaRouter = require("./routes/ventaRoutes");
+const orderRouter = require(`./routes/orderRoutes`);
 const cartRouter = require("./routes/cartRoutes");
 const paymentRouter = require("./routes/paypalRoutes");
 
@@ -25,7 +25,7 @@ connectDB();
 //IMPORTAR GESTIÓN DE RUTAS. 
 app.use(`/api/users`, authRouter); 
 app.use(`/api/products`, productRouter);
-app.use(`/api/ventas`, ventaRouter); 
+app.use(`/api/order`, orderRouter); 
 app.use(`/api/cart`, cartRouter); 
 app.use(`/api/payment`, paymentRouter);
 

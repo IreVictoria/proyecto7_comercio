@@ -5,6 +5,7 @@ const paypal =require(`../config/paypal`);
 //A. FUNCIÓN PARA CREAR UNA TRANSACCIÓN DE PAGO QUE EL USUARIO NECESITO APROBAR EN LA PAGINA DE PAYPAL.
 
 exports.createPayment = async (req, res) => {
+    const { amount } = req.body; // OBTENER MONTO DEL FRONTEND.
     const request = new paypal.orders.OrdersCreateRequest();
     request.prefer("return=representation");
     request.requestBody({
@@ -12,7 +13,7 @@ exports.createPayment = async (req, res) => {
         purchase_units: [{
             amount: {
                 currency_code: `USD`,
-                value: `100.00`
+                value: amount // usar el monto dinamico 
             }
         }]
     }); 
@@ -28,17 +29,17 @@ exports.createPayment = async (req, res) => {
 }; 
 //B. FUNCION PARA PROCESAR EL PAGO DESPUES DE QUE EL USUARIO APRUEBA EL PAGO EN PAYPAL.
 exports.executePayment = async (req, res) => {
-    const orderId = req.body.orderID;
+    const orderId = req.body.orderID; // OBTENER ID DE LA ORDEN. 
 
     const request = new paypal.orders.OrdersCaptureRequest(orderId);
     request.requestBody({});
 
     try{
-        const capture = await client().execute(request);
+        const capture = await client().execute(request); // CAPTURAR EL PAGO 
         const captureId = capture.result.purchase_units[0].payments.captures[0].id;
         res.status(200).json({
             captureId: captureId,
-            status: capture.result.status
+            status: capture.result.status // ESTADO DEL PAGO. 
         });
     }catch (error) {
         console.error(error);
