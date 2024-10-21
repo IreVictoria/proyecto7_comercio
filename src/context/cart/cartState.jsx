@@ -3,7 +3,6 @@ import { useReducer } from "react";
 import CartContext from "./cartContext";
 import CartReducer from "./cartReducer";
 import axiosClient from "../../config/axios";
-import axios from "axios";
 
 const CartState = (props) => {
     const initialState = {
@@ -34,7 +33,7 @@ const CartState = (props) => {
 
         dispatch({
             type: "REMOVE_FROM_CART",
-            payload: res.data
+            payload: res.data.cart
         });
     };
     const clearCart = async () => {

@@ -3,8 +3,8 @@ import Home from './components/home/inicio';
 import Profile from './components/profile/profile';
 import Register from './components/register/register';
 import Login from './components/login/login';
-import './App.css'
 import UserState from './context/user/userState';
+import './App.css'
 
 function App() {
   return (
