@@ -70,9 +70,13 @@ exports.removeFromCart = async (req, res) => {
 //C. FUNCIÓN PARA RETORNAR LOS DETALLES DEL CARRITO DE UN USUARIO (LISTA DE PRODUCTOS, CANTIDADES, Y TOTAL DEL CARRITO).
 exports.getCart = async (req, res) => {
     try {
-        const cart = await Cart.findOne({ user: req.user.id}).populate(`items.product`);
+        const cart = await Cart.findOne({ user: req.user.id}).populate("items.product");
         if (!cart) {
-            return res.status(404).json({ message: `Carrito no encontrado`});
+            //RETORNA UN CARRITO VACÍO SI NO EXISTE
+            return res.status(200).json({
+                items: [],
+                total: 0
+            });
         }
         res.status(200).json(cart); // devolver el producto con sus productos y detalles. 
     }catch (error) {
