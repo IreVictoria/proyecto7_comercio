@@ -11,7 +11,7 @@ const orderSchema = new mongoose.Schema(
             type: Number,
             required: true
         },
-        paymend_id: {
+        payment_id: {
             type: String,
             required: true
         },
@@ -27,4 +27,4 @@ const orderSchema = new mongoose.Schema(
 );
     
 const Order = mongoose.model(`Order`, orderSchema);
-module.exports= Order
+module.exports= Order; 

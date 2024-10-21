@@ -6,7 +6,7 @@ const User= require(`../models/userModel`);
 exports.registerOrder = async (req, res) => {
     const { usuario, monto, payment_id, merchant_order_id}= req.body;
 
-    if (!usuario || !monto) {
+    if (!usuario || !monto || !payment_id || !merchant_order_id) {
         return res.status(400).json({ message: "Usuario y monto son requeridos"});
     }
     try{
