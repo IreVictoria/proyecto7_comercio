@@ -8,6 +8,8 @@ import Cart from './components/cart/cart';
 import ProductState from './context/product/productState';
 import CartState from './context/cart/cartState';
 import './App.css'
+import ProductList from './components/pageProducts/productList';
+import ProductDetail from './components/pageProducts/productDetail';
 
 function App() {
   return (
@@ -19,6 +21,9 @@ function App() {
               {/* RUTAS PRIVADAS */}
               <Route path='/profile' element={< Profile />} />
               <Route path='/cart' element={<Cart />} />
+              <Route path='/productlist' element={< ProductList />} />
+              <Route path='/product/:id' element={< ProductDetail />} />
+
               {/*RUTAS AUTENTICACIÓN*/}
               <Route path='/register' element={<Register />} />
               <Route path='/login' element={<Login />} />

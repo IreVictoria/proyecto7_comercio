@@ -1,57 +1,60 @@
-//IMPORTAR LIBRERIAS Y CONTEXTO. 
+// IMPORTAR LIBRERÍAS.
 import React, { useContext, useEffect, useState } from "react";
-import CartContext from "../../context/cart/cartContext";
+import CartContext from "../../context/cart/CartContext";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { useNavigate } from "react-router-dom";
 import axiosClient from "../../config/axios";
 
-//COMPONENTE PRINCIPAL DE CARRITO.
 function Cart() {
     const { cart, total, getCart, addToCart, removeFromCart, clearCart } = useContext(CartContext);
-    const [success, setSuccess] = useState(false); // CONTROLA EL ESTADO DE PAGO.
-    const navigate = useNavigate(); // NAVEGACIÓN DESPUES DEL PAGO. 
+    const [success, setSuccess] = useState(false); // Controla el estado del pago.
+    const navigate = useNavigate(); // Navegación después del pago.
 
-    // CARGAR EL CARRITO AL MONTAR EL COMPONENTE.
+    // Cargar el carrito al montar el componente.
     useEffect(() => {
-        getCart(); // LLAMA AL BACKEND PARA OBTENER EL CARRITO
+        getCart();
     }, [getCart]);
 
-    //FUNCIÓN PARA ELMINAR UN PRODUCTO DEL CARRITO.
+    // Manejar la eliminación de productos del carrito.
     const handleRemove = (itemId) => {
-        removeFromCart(itemId); // ELIMINA UN PRODUCTO.
+        removeFromCart(itemId);
     };
 
-    //FUNCIÓN PARA AGREGAR MAS CANTIDAD DE UN PRODUCTO.
+    // Manejar el incremento de cantidad de productos.
     const handleAdd = (productId) => {
-        addToCart(productId, 1); // INCREMENTA LA CANTIDAD DEL PRODUCTO.
+        addToCart(productId, 1);
     };
-    //CREAR LA ORDEN PARA PAYPAL.
+
+    // Crear la orden para PayPal.
     const createOrder = async (data, actions) => {
         return actions.order.create({
-            purshase_units: [
+            purchase_units: [
                 {
                     amount: {
-                        value: total, // TOTAL DEL CARRITO EN USD.
+                        value: total, // Total del carrito en USD.
                     },
                 },
             ],
         });
     };
-    //CAPTURAR LA ORDEN APROBADA.
+
+    // Capturar la orden aprobada.
     const onApprove = async (data, actions) => {
         const order = await actions.order.capture();
         try {
-            //ENVIAR LA ORDEN AL BACKEND PARA PROCESARLA.
+            // Enviar la orden al backend para procesarla.
             await axiosClient.post("/api/payments/execute-payment", {
                 orderID: order.id,
             });
-            setSuccess(true); // MARCAR EL PAGO COMO EXITOSO.
-            clearCart(); // VACIAR CARRITO DESPUES DEL PAGO.
-            navigate("/profile"); // REDIRIGIR AL PERFIL DEL USUARIO.
+
+            setSuccess(true); // Marcar el pago como exitoso.
+            clearCart(); // Vaciar el carrito después del pago.
+            navigate("/profile"); // Redirigir al perfil del usuario.
         } catch (error) {
-            console.error("Error al ejecutar el pago", error);
+            console.error("Error al ejecutar el pago:", error);
         }
     };
+
     const onError = (error) => {
         console.error("Error en el pago:", error);
     };
@@ -112,9 +115,9 @@ function Cart() {
                         Total: ${total}
                     </p>
 
-                    <div className="mt-6 flex justify-between">
+                    <div className="flex justify-between space-x-4 w-full">
                         <button
-                            className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md transition"
+                            className="bg-cyan-500 hover:bg-cyan-600 text-white py-3 px-4 rounded-md transition w-full"
                             onClick={clearCart}
                         >
                             Vaciar Carrito
@@ -122,28 +125,18 @@ function Cart() {
 
                         <PayPalScriptProvider
                             options={{
-                                "client-id": `${import.meta.env.VITE_PAYPAL_CLIENT_ID}`,
+                                "client-id": "ASEK19uOHae68FMmWq2ZgzSvY73yPo4Kq120Alb0o2u80h1CHSfzRLuu9SzFyVpVXTndGQNjDrNF-zp_",
                                 currency: "USD",
                             }}
                         >
-                            <PayPalButtons
-                                style={{ layout: "horizontal" }}
-                                createOrder={(data, actions) => {
-                                    return actions.order.create({
-                                        purchase_units: [
-                                            {
-                                                amount: { value: total },
-                                            },
-                                        ],
-                                    });
-                                }}
-                                onApprove={(data, actions) => {
-                                    return actions.order.capture().then((details) => {
-                                        alert(`Pago realizado por ${details.payer.name.given_name}`);
-                                    });
-                                }}
-                                onError={(error) => console.error("Error en el pago:", error)}
-                            />
+                            <div className="w-full max-w-xs flex-grow">
+                                <PayPalButtons
+                                    style={{ layout: "horizontal", shape: "rect", height: 45, }}
+                                    createOrder={createOrder}
+                                    onApprove={onApprove}
+                                    onError={onError}
+                                />
+                            </div>
                         </PayPalScriptProvider>
                     </div>
 
@@ -154,9 +147,8 @@ function Cart() {
                     )}
                 </div>
             </div>
-        </div>
-
+        </div >
     );
 }
 
-export default Cart; 
+export default Cart;

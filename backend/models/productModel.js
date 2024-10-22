@@ -1,6 +1,6 @@
 // ESQUEMA MODELO DE PRODUCTOS.
 //IMPORTAR LIBRERÍAS.
-const mongoose= require(`mongoose`);
+const mongoose = require(`mongoose`);
 const productSchema = mongoose.Schema(
     {
         name: {
@@ -10,25 +10,23 @@ const productSchema = mongoose.Schema(
         price: {
             type: Number,
             required: true,
+            
         },
         description: {
             type: String,
-            required: false,
+            required: true,
+
         },
         imageUrl: {
             type: String,
-            required: false,
-        },
-        stock: {
-            type: Number,
             required: true,
-        }
+        },
     },
     {
-        timestamps:true
-      
+        timestamps: true
+
     }
-); 
+);
 
 const Product = mongoose.model(`Product`, productSchema);
 module.exports = Product; 

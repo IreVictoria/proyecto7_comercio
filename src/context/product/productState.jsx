@@ -7,14 +7,13 @@ import axiosClient from "../../config/axios";
 const ProductState = (props) => {
 
     const initialState = {
-        products: [],
+        products:[], // ARRAY VACÍO. 
         product: [{
             _id: "",
             name: "",
             price: "",
             description: "",
             imageUrl: "",
-            stock: ""
 
         }]
     }
@@ -26,19 +25,25 @@ const ProductState = (props) => {
 
         dispatch({
             type: "GET_PRODUCT",
-            payload: res.data.product
+            payload: res.data.product,
         })
         return product;
     }
 
     const getProducts = async () => {
-        const res = await axiosClient.get("/api/products/getall");
+        try{ 
+            const res = await axiosClient.get("/api/products/getall");
 
-        dispatch({
-            type: "GET_PRODUCTS",
-            payload: res.data.products
-        });
-    };
+            dispatch({
+                type: "GET_PRODUCTS",
+                payload: res.data.products || [], //ASEGURAR QUE SEA UN ARRAY
+            });
+        }catch (error) {
+            console.error("Error obteniendo productos:", error)
+        }
+    }; 
+
+       
 
     return (
         <ProductContext.Provider

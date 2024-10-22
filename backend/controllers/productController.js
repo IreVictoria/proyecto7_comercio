@@ -4,8 +4,8 @@ const Product = require (`../models/productModel.js`);
 //A. FUNCIÓN PARA CREAR UN PRODUCTO
 exports.createProduct = async (req, res) => {
     try {
-        const { name, price, description, image, stock } = req.body;
-        const nuevoProducto = await Product.create({ name, price, description, image, stock });
+        const { name, price,description,imageUrl } = req.body;
+        const nuevoProducto = await Product.create({ name, price, description, imageUrl  });
         res.json(nuevoProducto);
         console.log(nuevoProducto);
     } catch (error) {
@@ -41,8 +41,8 @@ exports.getProductById = async (req, res) => {
 //D. FUNCIÓN PARA ACTUALIZAR UN PRODUCTO.
 exports.updateProduct = async (req, res) => {
     try {
-        const { name, price, decription, image, stock } = req.body;
-        const productoActualizado = await Product.findByIdAndUpdate(req.params.id, { name, price, decription, image, stock }, { new: true });
+        const { name, price,description, imageUrl } = req.body;
+        const productoActualizado = await Product.findByIdAndUpdate(req.params.id, { name, price, description,imageUrl }, { new: true });
         res.json(productoActualizado);
 
     } catch (error) {
