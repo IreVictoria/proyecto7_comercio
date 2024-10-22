@@ -1,5 +1,6 @@
 //IMPORTAR LIBRERÍAS.
 import { Link } from "react-router-dom";
+import PropTypes  from "prop-types";// importar prop-types para la validación de los props
 
 function ProductItem ({ product }){
     const { _id, name, price, description, imageUrl } = product;
@@ -22,4 +23,14 @@ function ProductItem ({ product }){
 
     );
 }
+//DEFINIR LAS PROPTYPES PARA VALIDAR LAS PROPS QUE RECIBE EL COMPONENTE
+ProductItem.propTypes = {
+    product: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        description: PropTypes.string,
+        imageUrl: PropTypes.string,
+    }).isRequired,
+}; 
 export default ProductItem; 

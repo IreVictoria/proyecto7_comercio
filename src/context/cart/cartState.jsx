@@ -13,7 +13,7 @@ const CartState = (props) => {
     const [globalState, dispatch] = useReducer(CartReducer, initialState);
 
     const getCart = async () => {
-        const res = await axiosClient.get("/api/cart/get-cart");
+        const res = await axiosClient.get("http://localhost:3000/api/cart/get-cart");
 
         dispatch({
             type: "GET_CART",
