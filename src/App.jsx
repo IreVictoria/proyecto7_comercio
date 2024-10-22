@@ -7,16 +7,20 @@ import UserState from './context/user/userState';
 import Cart from './components/cart/cart';
 import ProductState from './context/product/productState';
 import CartState from './context/cart/cartState';
-import './App.css'
 import ProductList from './components/pageProducts/productList';
 import ProductDetail from './components/pageProducts/productDetail';
+import Navbar from './components/layout/navBar';
+import Footer from './components/layout/footer';
+import './App.css'
 
 function App() {
   return (
     <UserState>
       <ProductState>
         <CartState>
+
           <Router>
+            <Navbar />
             <Routes>
               {/* RUTAS PRIVADAS */}
               <Route path='/profile' element={< Profile />} />
@@ -31,6 +35,7 @@ function App() {
               {/* RUTAS PUBLICAS*/}
               <Route path='/' element={< Home />} />
             </Routes>
+            <Footer/>
 
           </Router>
         </CartState>
