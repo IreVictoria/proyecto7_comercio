@@ -115,29 +115,30 @@ function Cart() {
                         Total: ${total}
                     </p>
 
-                    <div className="flex justify-between space-x-4 w-full">
+                    <div className="flex justify-between items-stretch space-x-4 mt-4">
                         <button
-                            className="bg-cyan-500 hover:bg-cyan-600 text-white py-3 px-4 rounded-md transition w-full"
+                            className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-md transition w-1/2 h-[50px] flex items-center justify-center"
                             onClick={clearCart}
                         >
                             Vaciar Carrito
                         </button>
-
-                        <PayPalScriptProvider
-                            options={{
-                                "client-id":"ASEK19uOHae68FMmWq2ZgzSvY73yPo4Kq120Alb0o2u80h1CHSfzRLuu9SzFyVpVXTndGQNjDrNF-zp_",
-                                currency: "USD",
-                            }}
-                        >
-                            <div className="w-full max-w-xs flex-grow">
-                                <PayPalButtons
-                                    style={{ layout: "horizontal", shape: "rect", height: 45, }}
-                                    createOrder={createOrder}
-                                    onApprove={onApprove}
-                                    onError={onError}
-                                />
-                            </div>
-                        </PayPalScriptProvider>
+                        <div className="w-1/2 h-[50px]">
+                            <PayPalScriptProvider
+                                options={{
+                                    "client-id": "ASEK19uOHae68FMmWq2ZgzSvY73yPo4Kq120Alb0o2u80h1CHSfzRLuu9SzFyVpVXTndGQNjDrNF-zp_",
+                                    currency: "USD",
+                                }}
+                            >
+                                <div className="w-full max-w-xs flex-grow">
+                                    <PayPalButtons
+                                        style={{ layout: "horizontal", shape: "rect", height: 50, }}
+                                        createOrder={createOrder}
+                                        onApprove={onApprove}
+                                        onError={onError}
+                                    />
+                                </div>
+                            </PayPalScriptProvider>
+                        </div>
                     </div>
 
                     {success && (

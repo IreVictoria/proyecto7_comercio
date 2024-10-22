@@ -23,7 +23,7 @@ function Footer() {
       </aside>
 
       <nav className="mt-8">
-        <h6 className="text-cyan-400 text-lg font-semibold mb-4">Social</h6>
+        <h6 className="text-cyan-400 text-lg font-semibold mb-4">Redes sociales</h6>
         <div className="flex space-x-3 justify-center">
           {/** Íconos con menos separación y alineados */}
           <a href="#" className="hover:text-cyan-500 transition">
