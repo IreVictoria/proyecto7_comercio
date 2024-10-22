@@ -33,14 +33,22 @@ const ProductState = (props) => {
     const getProducts = async () => {
         try{ 
             const res = await axiosClient.get("/api/products/getall");
+            console.log("Productos recibidos:", res.data.products); // verificar respuesta
 
-            dispatch({
-                type: "GET_PRODUCTS",
-                payload: res.data.products || [], //ASEGURAR QUE SEA UN ARRAY
-            });
-        }catch (error) {
-            console.error("Error obteniendo productos:", error)
-        }
+            if(res.data && res.data.products) {
+                dispatch({
+                    type: "GET_PRODUCTS",
+                    payload: res.data.products || [], //ASEGURAR QUE SEA UN ARRAY
+                });
+
+            }else {
+                console.error("Error: No se recibieron productos");
+            }
+            
+         } catch (error) {
+             console.error("Error obteniendo productos:", error)
+         }
+
     }; 
 
        

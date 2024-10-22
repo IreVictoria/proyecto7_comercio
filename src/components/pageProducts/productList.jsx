@@ -21,7 +21,7 @@ function ProductList() {
         return <p className="text-center mt-10"> Cargando productos... </p>
     }
 
-    if (products.length === 0) {
+    if ( !products || products.length === 0) {
         return <p className="text-center mt-10" > No hay productos disponibles </p>
     }
 
