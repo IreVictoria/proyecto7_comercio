@@ -1,6 +1,6 @@
 // IMPORTAR LIBRERÍAS.
 import React, { useContext, useEffect, useState } from "react";
-import CartContext from "../../context/cart/CartContext";
+import CartContext from "../../context/cart/cartContext"
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { useNavigate } from "react-router-dom";
 import axiosClient from "../../config/axios";
@@ -125,7 +125,7 @@ function Cart() {
 
                         <PayPalScriptProvider
                             options={{
-                                "client-id": "ASEK19uOHae68FMmWq2ZgzSvY73yPo4Kq120Alb0o2u80h1CHSfzRLuu9SzFyVpVXTndGQNjDrNF-zp_",
+                                "client-id":"ASEK19uOHae68FMmWq2ZgzSvY73yPo4Kq120Alb0o2u80h1CHSfzRLuu9SzFyVpVXTndGQNjDrNF-zp_",
                                 currency: "USD",
                             }}
                         >
