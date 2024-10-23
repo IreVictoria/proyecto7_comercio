@@ -20,7 +20,7 @@ const ProductState = (props) => {
 
     const [globalState, dispatch] = useReducer(ProductReducer, initialState);
     const getProduct = async (id) => {
-        const res = await axiosClient.get(`http://localhost:3000/api/products/getone/${id}`)
+        const res = await axiosClient.get(`/products/getone/${id}`)
         const product = res.data.product;
 
         dispatch({
@@ -32,7 +32,7 @@ const ProductState = (props) => {
 
     const getProducts = async () => {
         try{ 
-            const res = await axiosClient.get("/api/products/getall");
+            const res = await axiosClient.get("/products/getall");
             console.log("Productos recibidos:", res.data.products); // verificar respuesta
 
             if(res.data && res.data.products) {

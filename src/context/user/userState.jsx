@@ -17,7 +17,7 @@ const UserState = ({children}) => {
     const [ globalState, dispatch ] = useReducer(UserReducer, initialState) // UserReducer FUNCIÓN QUE MANEJARA COMO CAMBIA EL ESTADO. 
     const registerUser = async (dataForm) => {
         try{
-            const res = await axiosClient.post(`/api/users/register`, dataForm) // REALIZA UNA PETICION POST PARA REGISTRAR AL USUARIO.
+            const res = await axiosClient.post(`/users/register`, dataForm) // REALIZA UNA PETICION POST PARA REGISTRAR AL USUARIO.
             dispatch({
                 type: "REGISTRO_EXITOSO", // ACCION ENVIADA AL REDUCER PARA CAMBIAR EL ESTADO.
                 payload: res.data 
@@ -35,7 +35,7 @@ const UserState = ({children}) => {
             delete axiosClient.defaults.headers.common["x-auth-token"] // ELIMINA EL TOKEN DE LOS ENCABEZADOS SI NO EXISTE
         }
         try{
-            const respuesta = await axiosClient.get("/api/users/verify-token") // VERIFICA SI EL TOKEN ES VALIDO
+            const respuesta = await axiosClient.get("/users/verify-token") // VERIFICA SI EL TOKEN ES VALIDO
             dispatch({
                 type: "OBTERNER_USUARIO", // ACCION PARA ACTUALIZAR EL ESTADO CON LOS DATOS DEL USUARIO 
                 payload: respuesta.data.user
@@ -51,7 +51,7 @@ const UserState = ({children}) => {
     const loginUser = async (dataForm) => {
         console.log(`dataForm`, dataForm)
         try {
-            const respuesta = await axiosClient.post(`/api/users/login`)
+            const respuesta = await axiosClient.post(`/users/login`)
             console.log(respuesta)
             dispatch ({
                 type: "LOGIN_EXITOSO",

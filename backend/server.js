@@ -17,7 +17,11 @@ const app = express();
 
 //MIDDLEWARE PARA PARSEAR JSON Y HABILITAR CORS.
 app.use(express.json());
-app.use(cors()); 
+//app.use(cors()); 
+app.use(cors({
+    origin:"http://localhost:5173", // process.env.FRONTEND_URL REEMPLAZAR POR LA URL DEL FRONTEND
+    credentials: true, // SI ESTAS ENVIANDO COOKIES O ENCABEZADOS DE AUTENTICACIÓN 
+})); 
 
 //IMPORTAR FUNCIÓN PARA LA CONEXIÓN DE BAS DE DATOS. 
 connectDB(); 
