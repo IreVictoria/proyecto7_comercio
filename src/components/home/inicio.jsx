@@ -5,8 +5,9 @@ function Home() {
   const navigate = useNavigate(); // INICIALIZAR USENAGIGATE
 
   const handleComenzar = () => {
-    navigate("/register"); // REDIRIGE A LA PAGINA DE REGISTRO
+    navigate("/productlist"); // REDIRIGE A LA PAGINA DE REGISTRO
   };
+
   return (
     <div
       className="hero min-h-screen"
@@ -24,14 +25,17 @@ function Home() {
           <button
             onClick={handleComenzar} // evento de click 
             className="bg-cyan-500 text-white px-6 py-3 rounded-lg font-semibold 
-                   hover:bg-cyan-600 transition hover:scale-105 shadow-lg"
+                 hover:bg-cyan-600 transition hover:scale-105 shadow-lg"
           >
             Comenzar
           </button>
         </div>
       </div>
     </div>
+  )
 
-  );
 }
-export default Home; 
+export default Home;
+
+
+

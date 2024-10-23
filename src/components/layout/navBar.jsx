@@ -13,7 +13,7 @@ function Navbar (){
                 <div className="flex justify-between items-center h-16">
                     <div className="flex items-center space-x-4">
                         <Link to="/" className="text-cyan-400 text-2xl font-bold">
-                            Mi Óptica Online 👓
+                            MiTienda 👓
                         </Link>
                         <div className="hidden md:flex space-x-4">
                             <NavLink
