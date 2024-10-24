@@ -32,7 +32,7 @@ const ProductState = (props) => {
 
     const getProducts = async () => {
         try{ 
-            const res = await axiosClient.get("/products/getall");
+            const res = await axiosClient.get("http://localhost:3000/api/products/getall");
             console.log("Productos recibidos:", res.data.products); // verificar respuesta
 
             if(res.data && res.data.products) {

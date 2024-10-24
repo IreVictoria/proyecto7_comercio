@@ -18,10 +18,14 @@ const app = express();
 //MIDDLEWARE PARA PARSEAR JSON Y HABILITAR CORS.
 app.use(express.json());
 //app.use(cors()); 
-app.use(cors({
-    origin:"http://localhost:5173", // process.env.FRONTEND_URL REEMPLAZAR POR LA URL DEL FRONTEND
-    credentials: true, // SI ESTAS ENVIANDO COOKIES O ENCABEZADOS DE AUTENTICACIÓN 
-})); 
+const allowedOrigins = ["http://localhost:5173"]; 
+app.use(cors({    
+     origin: function (origin, callback) {         
+        if (allowedOrigins.includes(origin) || !origin) {             
+            callback(null, true);         
+        } else {             
+            callback(new Error('Not allowed by CORS')); 
+        } }, credentials: true, }));
 
 //IMPORTAR FUNCIÓN PARA LA CONEXIÓN DE BAS DE DATOS. 
 connectDB(); 

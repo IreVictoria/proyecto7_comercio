@@ -27,7 +27,7 @@ const CartState = (props) => {
             type: "ADD_TO_CART",
             payload: res.data.cart
         });
-    };
+    }
     const removeFromCart = async (itemId) => {
         const res = await axiosClient.delete("/cart/remove-cart", { data: { itemId } });
 
@@ -35,7 +35,7 @@ const CartState = (props) => {
             type: "REMOVE_FROM_CART",
             payload: res.data.cart
         });
-    };
+    }
     const clearCart = async () => {
 
         const res = await axiosClient.delete("/cart/clear-cart");
@@ -45,7 +45,7 @@ const CartState = (props) => {
             payload: res.data.cart // RESPUESTA DEL BACKEND CON LA INFORMACIÓN DEL CARRITO. 
         });
 
-    };
+    }
 
     return (
         <CartContext.Provider
