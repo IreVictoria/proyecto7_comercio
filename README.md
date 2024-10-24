@@ -22,7 +22,7 @@ El objetivo de este proyecto es desarrollar una aplicación Fullstack de comerci
 - Autenticación de usuarios, incluido el registro de cuentas y el inicio de sesión, mediante JSON Web Tokens (JWT).
   
 - Autorización, mediante la creación de áreas privadas en las que los usuarios puedan acceder y gestionar su perfil e información personal.
-- 
+ 
 <p>
   
 Para el desarrollo de este proyecto, te recomendamos emplear las siguientes tecnologías:
