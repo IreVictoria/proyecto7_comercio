@@ -6,7 +6,7 @@ const reducers = (globalState, action) => {
         case "LOGIN_EXITOSO":
         case "REGISTRO_EXITOSO":
 
-            localStorage.setItem(`token`, action.payload.token)
+            localStorage.setItem("token", action.payload.token)
 
             return {
                 ...globalState,
@@ -22,7 +22,7 @@ const reducers = (globalState, action) => {
             }
 
         case "CERRAR_SESION":
-            localStorage.removeItem(`token`)
+            localStorage.removeItem("token")
 
             return {
                 ...globalState,

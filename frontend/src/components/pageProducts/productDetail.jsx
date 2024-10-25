@@ -12,7 +12,7 @@ function ProductDetail() {
     }, [id, getProduct]);
 
     if (!product || !product[0]) {
-        return <p className="text-center mt-10"> Cargando producto</p>
+        return <p className="text-center mt-10"> Cargando producto... </p>
     }
 
     const { name, description, price, imageUrl } = product[0];

@@ -51,7 +51,7 @@ const UserState = ({children}) => {
     const loginUser = async (dataForm) => {
         console.log(`dataForm`, dataForm)
         try {
-            const respuesta = await axiosClient.post(`/users/login`)
+            const respuesta = await axiosClient.post(`/users/login`, dataForm)
             console.log(respuesta)
             dispatch ({
                 type: "LOGIN_EXITOSO",
