@@ -49,7 +49,7 @@ exports.loginUser = async (req, res) => {
             // SE USA LA PALABRA SECRETA PARA DECIFRAR LA FIRMA ELECTRONICA DEL TOKEN.
             process.env.JWT_SECRET,
             {
-                expiresIn: 3_600_000 // EXPIRACIÓN DEL TOKEN QUE DURA 1 HRA.
+                expiresIn: 3600 // EXPIRACIÓN DEL TOKEN QUE DURA 1 HORA (3600 segundos).
             },
             (error, token) => {
                 if (error) throw error;
@@ -114,7 +114,7 @@ exports.updateUser = async (req, res) => {
 
     try {
         //BUSCAR Y ACTUALIZAR EL USUARIO POR SU ID 
-        const updateUser = await User.finByIdAndUpdate(
+        const updateUser = await User.findByIdAndUpdate(
             req.user.id, updates,
             {
                 new: true, // DEVOLVER DOCUMENTO ACTULIZADO 
